@@ -1,39 +1,33 @@
-name: "transformer_sample_config"
+name: "word_level_config"
 joeynmt_version: "2.0.0"
-
+use_cuda: False
 
 data:
-    train: "?"
-    dev:   "?"
-    test:  "?"
+    train: "./data100k/train/train.en-de"
+    dev: "./data100k/dev/dev.en-de"
+    test: "./data100k/test/test.en-de"
     dataset_type: "plain"
     src:
-        lang: "?"
-        level: "?"
+        lang: "en"
+        level: "word"
         lowercase: False
         max_sent_length: 100
         # either use a vocabulary limit:
-        voc_limit: ?
+        voc_limit: 2000
         # or (= not both!) a file with a vocabulary built before starting the training:
-        voc_file : "?"
-        tokenizer_type: "?"
-        tokenizer_cfg:
-            ?
+        # voc_file : "?"
     trg: 
-        lang: "?"
-        level: "?"
+        lang: "de"
+        level: "word"
         lowercase: False
         max_sent_length: 100
         # either use a vocabulary limit:
-        voc_limit: ?
+        voc_limit: 2000
         # or (= not both!) a file with a vocabulary built before starting the training:
-        voc_file : "?"
-        tokenizer_type: "?"
-        tokenizer_cfg:
-            ?
+        # voc_file : "?"
 
 testing:
-    beam_size: ?
+    beam_size: 5    #Used the same default as in the config from last exercise
     alpha: 1.0
 
 training:
@@ -54,13 +48,14 @@ training:
     validation_freq: 500
     logging_freq: 100
     eval_metric: "bleu"
-    model_dir: "?"
+    model_dir: "/Users/sud/Desktop/mt_4/mt-exercise-4/models/word_level_nmt"
     overwrite: False
     shuffle: True
     use_cuda: False
     max_output_length: 100
     print_valid_sents: [0, 1, 2, 3, 4]
     label_smoothing: 0.3
+    scheduler_args: {}  # To override verbose
 
 model:
     initializer: "xavier_uniform"
@@ -68,7 +63,7 @@ model:
     init_gain: 1.0
     embed_initializer: "xavier_uniform"
     embed_init_gain: 1.0
-    tied_embeddings: True
+    tied_embeddings: False
     tied_softmax: True
     encoder:
         type: "transformer"
